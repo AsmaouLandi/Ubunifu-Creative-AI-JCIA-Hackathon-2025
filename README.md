@@ -204,6 +204,8 @@ visualize_features(model, test_ds)
 - We can also try to remove the classes with few metric values like bruised and spotted and train them separately using 2 models (one with the classes bruised
   and spotted and the other with the 4 other classes), then choose the one with higher confidence score during prediction.
 - We can also apply cropping of image only to remove the background and help the model train more efficiently.
+- Use an ensemble of models trained with different augmentations or loss functions to increase robustness, especially for rare classes.
+- Since "spotted" and "bruised" are visually too similar, we can consider merging them
 
 ## 🧑‍💻 Author
 
