@@ -221,11 +221,11 @@ visualize_features(model, test_ds)
 ## 🧑‍💻 Author
 
 **Ubunifu AI**  
-Djika Asmaou  Houma (Group leader)
-Tchouangwo Kamdem Sandrine Ariane
-Renaud Axel Eba
-Okpala Chibuike
-Dina Valdez Camille Chazeaud
+- Djika Asmaou  Houma (Group leader)
+- Tchouangwo Kamdem Sandrine Ariane
+- Renaud Axel Eba
+- Okpala Chibuike
+- Dina Valdez Camille Chazeaud
 
 
 
