@@ -1,1 +1,1 @@
-# Ubunifi-Creative-AI--JCIA-Hackathon-2025
+# Ubunifu (Creative)AI-JCIA-Hackathon 2025
