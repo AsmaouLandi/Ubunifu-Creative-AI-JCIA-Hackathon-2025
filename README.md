@@ -19,7 +19,7 @@ A computer vision system for **automated plum classification** using **transfer 
 ```
 plum-sorting/
 │
-├── data/
+├── cleaned_african_plums_dataset/
 │   ├── bruised/
 │   ├── cracked/
 │   ├── rotten/
@@ -31,7 +31,7 @@ plum-sorting/
 │   ├── EfficientNetb3-final.keras      # Saved model
 │   ├── log.csv                         # Training logs
 │
-├── plum-cutmix-effb3-6class-final.ipynb  # Main notebook
+├── Plum-cutmix-effb3-6class-Ubunifu-AI.ipynb  # Main notebook
 ├── Plum_dataset_overview.ipynb # dataset overview
 ├── README.md
 ```
@@ -39,30 +39,23 @@ plum-sorting/
 ---
 
 ## I- Dataset Cleaning and Analysis (Plum_dataset_overview.ipynb)
-This involves cleaning, analyzing, and preparing an image dataset of African plums for training machine learning models. The dataset initially contained class imbalances, possible duplicate and mislabelled images, and some quality issues.Below is a description of all operations performed:
-from IPython.display import Markdown
+This involves cleaning, analyzing, and preparing the image dataset of African plums for training machine learning models. The dataset initially contained class imbalances and a lot of duplicate images which can artificially inflate model performance and introduce data leakage between train/test sets, harming real-world generalization. Below is a description of all operations performed:
 
 ## ✅ 1. Dataset Structure
 
 - Directory: `african_plums_dataset/african_plums/`
 - Each subfolder represents a class: `unaffected`, `cracked`, `bruised`, `rotten`, `spotted`, `unripe`.This makes it easy to load labeled data automatically, useful for training classification models using most deep learning frameworks 
 
----
-
 ## 📊 2. Initial Class Distribution
 
 - Counted and visualized the number of images per class.
 - Observed **significant class imbalance**: e.g., "unaffected" >> "cracked". This step reveals the need for techniques like class weighting, resampling, or augmentation.
-
----
 
 ## 🖼️ 3. Sample Visualization
 
 - Displayed **3 random images per class**.
 - Organized in rows with the class name as the row header.
 - Helped identify visual diversity and outliers.
-
----
 
 ## 🧹 4. Cleaning the Dataset
 
@@ -77,15 +70,11 @@ from IPython.display import Markdown
 - This helps detect grayscale images with extremely low variation (e.g., all black, all white).
 which can add noise, confuse the model, and waste training resources without adding value.
 
----
-
 ## 📉 5. Updated Class Distribution
 
 - Recalculated image counts after cleaning.
 - Replotted the bar chart to reflect the cleaned dataset.
 - It helped to verify that our cleanup actions were applied properly, and whether further class balancing is needed (via upsampling, augmentation, etc.).
-
----
 
 ## 🧠 6. t-SNE Visualization
 
@@ -94,8 +83,6 @@ which can add noise, confuse the model, and waste training resources without add
 - Plotted 2D clusters, color-coded by **actual class names**.
 - Helps assess how separable classes are in feature space, whether images from different classes overlap (risk of misclassification) and whether visual clusters match expected labels.
 
----
-
 ## 🔗 7. Class Similarity Matrix
 
 - Averaged embeddings per class.
@@ -103,21 +90,17 @@ which can add noise, confuse the model, and waste training resources without add
 - Built a matrix to visualize **inter-class similarities** (e.g., overlap between spotted and bruised).
 - This helps identify which classes are visually similar and likely to be confused and where model confusion might occur (e.g., "bruised" vs. "spotted").
 
----
-
 ## 💾 8. Save Cleaned Dataset
 
 - Created new folder: `cleaned_african_plums_dataset/`
 - Copied only cleaned, verified images, preserving the class structure.
-
----
 
 ## 🛠️ Libraries Used
 - `matplotlib`, `Pillow`, `imagehash`
 - `torch`, `torchvision`, `sklearn`, `numpy`
 - `shutil`, `os`
 
-## II- Main notebook (plum-cutmix-effb3-6class-final.ipynb)
+## II- Main notebook (Plum-cutmix-effb3-6class-Ubunifu-AI.ipynb)
 
 
 ### 1. 📥 Data Loading
@@ -135,10 +118,9 @@ which can add noise, confuse the model, and waste training resources without add
 
 ### 3. 🧪 Dataset Splitting
 
-- 80% of data → training & validation
-- 20% of data → test set
-- Within training/validation split: 90% training, 10% validation
-- Created using `train_test_split()` from `sklearn`
+- 80% of data → training 
+- 10% of data → validation
+- 10% of data → testing
 
 ### 4. 🔀 CutMix Augmentation
 
@@ -217,6 +199,11 @@ visualize_features(model, test_ds)
 - `log.csv`: Training and validation metrics over epochs
 
 ---
+## Recommendations
+- To improve model accuracy and generizability, more data is needed.
+- We can also try to remove the classes with few metric values like bruised and spotted and train them separately using 2 models (one with the classes bruised
+  and spotted and the other with the 4 other classes), then choose the one with higher confidence score during prediction.
+- We can also apply cropping of image only to remove the background and help the model train more efficiently.
 
 ## 🧑‍💻 Author
 
