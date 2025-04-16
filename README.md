@@ -186,10 +186,6 @@ model.fit(train_ds, validation_data=val_ds, epochs=30, callbacks=[...])
 
 To run our code, make sure to install the following packages:
 
-```bash
-pip install -r requirements.txt
-```
-
 Main dependencies include:
 
 - `tensorflow`
