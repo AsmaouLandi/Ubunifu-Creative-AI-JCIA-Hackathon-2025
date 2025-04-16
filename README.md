@@ -43,7 +43,7 @@ This involves cleaning, analyzing, and preparing the image dataset of African pl
 
 ## ✅ 1. Dataset Structure
 
-- Directory: `african_plums_dataset/african_plums/`
+- Directory: `african_plums_dataset/african_plums/` from Kaggle (https://www.kaggle.com/datasets/arnaudfadja/african-plums-quality-and-defect-assessment-data)
 - Each subfolder represents a class: `unaffected`, `cracked`, `bruised`, `rotten`, `spotted`, `unripe`.This makes it easy to load labeled data automatically, useful for training classification models using most deep learning frameworks 
 
 ## 📊 2. Initial Class Distribution
