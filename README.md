@@ -1,6 +1,6 @@
 # Ubunifu (Creative) AI - JCIA Hackathon 2025
 
-# 🍑 Automatic Plum Sorting with EfficientNetB3 and CutMix
+## 🍑 Automatic Plum Sorting with EfficientNetB3 and CutMix
 
 A computer vision system for **automated plum classification** using **transfer learning** and **advanced data augmentation techniques**. We used an augmentation technique like CutMix to enhance the model's ability to generalize by exposing it to a more diverse range of image variations, reducing overfitting and improving robustness against real-world inconsistencies. This model classifies plums into 6 quality categories based on visual features to support agricultural sorting and grading processes.
 
@@ -104,7 +104,6 @@ jupyter notebook Plum_cutmix_effb3_6class_Ubunifu_AI.ipynb
 ```
 
 > ✅ *Recommended: Use Google Colab for faster training (especially with GPU like A100).*
-Great question! Below is a clear and user-friendly section you can **add to your README** to explain how to run the **Streamlit app** for plum quality classification after training the model:
 
 
 ## 🌐 How to Run the Streamlit App
