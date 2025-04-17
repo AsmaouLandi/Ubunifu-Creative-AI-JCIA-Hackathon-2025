@@ -4,15 +4,11 @@
 
 A computer vision system for **automated plum classification** using **transfer learning** and **advanced data augmentation techniques**. We used an augmentation technique like CutMix to enhance the model's ability to generalize by exposing it to a more diverse range of image variations, reducing overfitting and improving robustness against real-world inconsistencies. This model classifies plums into 6 quality categories based on visual features to support agricultural sorting and grading processes.
 
----
-
 ## 🧠 Project Overview
 
 - **Goal**: Accurately classify images of plums into one of the six condition classes: `bruised`, `cracked`, `rotten`, `spotted`, `unaffected`, and `unripe`.
 - **Approach**: Transfer learning using **EfficientNetB3**, enhanced with **CutMix** augmentation to improve model generalization.
 - **Output**: A trained `.keras` model file, visualizations of learned feature space, and evaluation metrics.
-
----
 
 ## 📁 Directory Structure
 
@@ -63,7 +59,7 @@ This notebook builds and trains a **Convolutional Neural Network** using **Effic
 
 > 🚀 **Training Result**: The model achieves ~72% top-1 accuracy and ~99.5% top-k accuracy, showing strong performance in classifying "unaffected" and "unripe" categories.
 
-
+----
 ## ▶️ How to Run These Notebooks
 
 ### Step 1: Clone this repository
@@ -105,7 +101,7 @@ jupyter notebook Plum_cutmix_effb3_6class_Ubunifu_AI.ipynb
 
 > ✅ *Recommended: Use Google Colab for faster training (especially with GPU like A100).*
 
-
+----
 ## 🌐 How to Run the Streamlit App
 
 Once the model is trained and saved (e.g., `EfficientNetb3-final.keras`), you can deploy it using the **Streamlit app** to make predictions on new plum images or videos.
@@ -125,9 +121,7 @@ Ensure your project directory looks like this:
 plum-classification-ai/
 ├── files/
 │   └── EfficientNetb3-final.keras           # trained model
-├── app.py                                   # Streamlit app script
-├── image_prediction_result.csv              # (auto-generated)
-├── video_prediction_results.csv             # (auto-generated)
+├── Streamlit_App_plums_detect_Ubunifu_AI.py # Streamlit app script
 ├── t-SNE.png                                # optional for visualization
 ├── metrics.png                              # optional for metrics
 
