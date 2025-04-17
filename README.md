@@ -202,14 +202,32 @@ visualize_features(model, test_ds)
 ---
 ## Recommendations
 - To improve model accuracy and generizability, more data is needed.
-- We can also try to remove the classes with few metric values like bruised and spotted and train them separately using 2 models (one with the classes bruised
-  and spotted and the other with the 4 other classes), then choose the one with higher confidence score during prediction.
+- We can also try to remove the classes with few metric values like bruised and spotted and train them separately using 2 models (one with the classes bruised and spotted and the other with the 4 other classes), then choose the one with higher confidence score during prediction.
 - We can also apply cropping of image only to remove the background and help the model train more efficiently.
 - Use an ensemble of models trained with different augmentations or loss functions to increase robustness, especially for rare classes.
 - Since "spotted" and "bruised" are visually too similar, we can consider merging them
 
-## 🧑‍💻 Authors
+## III- Streamlit Plum Classifier (Streamlit_App_plums_detect_Ubunifu_AI.py)
 
+This is a web-based AI platform that helps automatically predict the quality of plums using images or videos. It is built with **Streamlit** and uses a **deep learning model** (EfficientNetB3) trained to recognize six categories: **bruised, cracked, rotten, spotted, unaffected, and unripe**.
+
+When users upload a plum image or a video:
+- The app processes the image or each frame of the video.
+- The model predicts the condition of the plum.
+- The results, including prediction confidence scores, are displayed in easy-to-read charts and summaries.
+- The predictions are also saved automatically in CSV files for later review.
+
+The platform also provides two visualization tools:
+- **Model Metrics** (precision, recall, F1-score, etc.) showing the overall model performance.
+- **t-SNE Plot** showing how the model separates different plum conditions in feature space.
+
+The app interface is simple:
+- You can upload an image or video.
+- Click a button to start detection.
+- See the predicted class and how confident the model is.
+- For videos, you also get a frame-by-frame breakdown.
+
+## 🧑‍💻 Authors
 **Ubunifu AI**  
 - Djika Asmaou  Houma (Group leader)
 - Tchouangwo Kamdem Sandrine Ariane
