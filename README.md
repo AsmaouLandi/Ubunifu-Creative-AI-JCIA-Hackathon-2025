@@ -17,8 +17,8 @@ A computer vision system for **automated plum classification** using **transfer 
 ## 📁 Directory Structure
 
 ```
-plum-sorting/
-│
+
+
 ├── cleaned_african_plums_dataset/
 │   ├── bruised/
 │   ├── cracked/
@@ -31,8 +31,9 @@ plum-sorting/
 │   ├── EfficientNetb3-final.keras      # Saved model
 │   ├── log.csv                         # Training logs
 │
-├── Plum-cutmix-effb3-6class-Ubunifu-AI.ipynb  # Main notebook
-├── Plum_dataset_overview.ipynb # dataset overview
+├── Plum_cutmix_effb3_6class_Ubunifu_AI.ipynb  # Main notebook
+├── Plum_dataset_overview_Ubunifu_AI.ipynb # dataset overview
+├── Streamlit_App_plums_detect_Ubunifu_AI.py # Web application 
 ├── README.md
 ```
 
