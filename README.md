@@ -68,7 +68,7 @@ This involves cleaning, analyzing, and preparing the image dataset of African pl
 - Automatically deleted all but one per group.
 
 ### 🕳️ c. Blank/Near-empty Image Detection
-- This helps detect grayscale images with extremely low variation (e.g., all black, all white).
+- This helps detect grayscale images with extremely low variation (e.g., all black, all white)
 which can add noise, confuse the model, and waste training resources without adding value.
 
 ## 📉 5. Updated Class Distribution
@@ -208,7 +208,7 @@ visualize_features(model, test_ds)
 - Use an ensemble of models trained with different augmentations or loss functions to increase robustness, especially for rare classes.
 - Since "spotted" and "bruised" are visually too similar, we can consider merging them
 
-## 🧑‍💻 Author
+## 🧑‍💻 Authors
 
 **Ubunifu AI**  
 - Djika Asmaou  Houma (Group leader)
