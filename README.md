@@ -18,7 +18,6 @@ A computer vision system for **automated plum classification** using **transfer 
 
 ```
 
-
 ├── cleaned_african_plums_dataset/
 │   ├── bruised/
 │   ├── cracked/
@@ -37,196 +36,124 @@ A computer vision system for **automated plum classification** using **transfer 
 ├── README.md
 ```
 
----
+## 📘 1. `Plum_dataset_overview_Ubunifu_AI.ipynb` — *Dataset Cleaning & Exploration*
 
-## I- Dataset Cleaning and Analysis (Plum_dataset_overview.ipynb)
-This involves cleaning, analyzing, and preparing the image dataset of African plums for training machine learning models. The dataset initially contained class imbalances and a lot of duplicate images which can artificially inflate model performance and introduce data leakage between train/test sets, harming real-world generalization. Below is a description of all operations performed:
+This notebook performs a detailed **analysis and preprocessing of the plum image dataset**. It includes:
 
-## ✅ 1. Dataset Structure
+- 📊 **Class distribution analysis**  
+- 🧹 **Duplicate image detection and removal**  
+- 🏷️ **Mislabelled sample identification**  
+- 🕳️ **Detection of empty or near-empty images**  
+- 📉 **Updated class distribution after cleaning**
+- **Saved cleaned dataset in cleaned_african_plums_dataset**
 
-- Directory: `african_plums_dataset/african_plums/` from Kaggle (https://www.kaggle.com/datasets/arnaudfadja/african-plums-quality-and-defect-assessment-data)
-- Each subfolder represents a class: `unaffected`, `cracked`, `bruised`, `rotten`, `spotted`, `unripe`.This makes it easy to load labeled data automatically, useful for training classification models using most deep learning frameworks 
-
-## 📊 2. Initial Class Distribution
-
-- Counted and visualized the number of images per class.
-- Observed **significant class imbalance**: e.g., "unaffected" >> "cracked". This step reveals the need for techniques like class weighting, resampling, or augmentation.
-
-## 🖼️ 3. Sample Visualization
-
-- Displayed **3 random images per class**.
-- Organized in rows with the class name as the row header.
-- Helped identify visual diversity and outliers.
-
-## 🧹 4. Cleaning the Dataset
-
-### 🔁 a. Duplicate Detection
-- Used **perceptual hashing (pHash)** with `imagehash` to detect near-identical images. Duplicate images artificially inflate model performance and introduce data leakage between train/test sets, harming real-world generalization.
-
-### 👁️ b. Duplicate Review
-- Displayed duplicate groups side by side.
-- Automatically deleted all but one per group.
-
-### 🕳️ c. Blank/Near-empty Image Detection
-- This helps detect grayscale images with extremely low variation (e.g., all black, all white)
-which can add noise, confuse the model, and waste training resources without adding value.
-
-## 📉 5. Updated Class Distribution
-
-- Recalculated image counts after cleaning.
-- Replotted the bar chart to reflect the cleaned dataset.
-- It helped to verify that our cleanup actions were applied properly, and whether further class balancing is needed (via upsampling, augmentation, etc.).
-
-## 🧠 6. t-SNE Visualization
-
-- Extracted feature vectors using **EfficientNetB0**.
-- Applied **t-SNE** for dimensionality reduction.
-- Plotted 2D clusters, color-coded by **actual class names**.
-- Helps assess how separable classes are in feature space, whether images from different classes overlap (risk of misclassification) and whether visual clusters match expected labels.
-
-## 🔗 7. Class Similarity Matrix
-
-- Averaged embeddings per class.
-- Computed **cosine similarity** between class centroids.
-- Built a matrix to visualize **inter-class similarities** (e.g., overlap between spotted and bruised).
-- This helps identify which classes are visually similar and likely to be confused and where model confusion might occur (e.g., "bruised" vs. "spotted").
-
-## 💾 8. Save Cleaned Dataset
-
-- Created new folder: `cleaned_african_plums_dataset/`
-- Copied only cleaned, verified images, preserving the class structure.
-
-## 🛠️ Libraries Used
-- `matplotlib`, `Pillow`, `imagehash`
-- `torch`, `torchvision`, `sklearn`, `numpy`
-- `shutil`, `os`
-
-## II- Main notebook (Plum-cutmix-effb3-6class-Ubunifu-AI.ipynb)
+> 🔍 **Goal**: Improve data quality before training by identifying and cleaning problematic samples.
 
 
-### 1. 📥 Data Loading
+## 📗 2. `Plum_cutmix_effb3_6class_Ubunifu_AI.ipynb` — *Model Training with CutMix and EfficientNetB3*
 
-- Data is loaded from a **cleaned folder structure**, where each subfolder corresponds to a class label.
-- File paths and labels are collected, and labels are encoded using `LabelEncoder`.
+This notebook builds and trains a **Convolutional Neural Network** using **EfficientNetB3** and advanced augmentation techniques such as **CutMix**. It includes:
 
-### 2. 🧼 Preprocessing & Augmentation
+- 📦 Data loading and augmentation pipeline using `tf.data`
+- 🔁 Data splitting into training, validation, and test sets
+- ⚖️ Handling of class imbalance using **cutmix augmentation**
+- 🧠 Model architecture based on **EfficientNetB3**
+- 📈 Metrics & performance visualizations (accuracy, F1-score, t-SNE, confusion matrix)
+- 💾 Saves the trained model and logs
 
-- Images are resized to `(224, 224)` and normalized to `[0, 1]`.
-- Augmentation:
-  - Random flip (horizontal & vertical)
-  - Random crop after resizing
-- Labels are one-hot encoded using `tf.one_hot`.
+> 🚀 **Training Result**: The model achieves ~72% top-1 accuracy and ~99.5% top-k accuracy, showing strong performance in classifying "unaffected" and "unripe" categories.
 
-### 3. 🧪 Dataset Splitting
 
-- 80% of data → training 
-- 10% of data → validation
-- 10% of data → testing
+## ▶️ How to Run These Notebooks
 
-### 4. 🔀 CutMix Augmentation
-
-- Applied **on-the-fly** using `tf.data.map()`
-- Random patches are extracted from different images and mixed
-- Corresponding labels are **proportionally blended**
-
-### 5. 🧠 Model Building
-
-- `get_model()` dynamically loads a pretrained CNN from:
-  - `EfficientNet`, `ResNet`, `VGG`, `MobileNet`, `Xception`, etc.
-- Custom classification head:
-  - Global pooling → Dense(512, ReLU) → Dropout(0.5) → Output (softmax for 6 classes)
-
-```python
-model = get_model('efficientb3', input_shape=(224, 224, 3), num_classes=6)
+### Step 1: Clone this repository
+```bash
+git clone https://github.com/your-username/plum-classification-ai.git
+cd plum-classification-ai
 ```
 
-### 6. 🏋️ Training
-
-- Loss: `categorical_crossentropy`
-- Metrics: `accuracy`
-- Optimizer: `Adam`
-- Callbacks:
-  - `ModelCheckpoint` (to save best weights)
-  - `ReduceLROnPlateau`
-  - `EarlyStopping` (optional)
-
-```python
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-model.fit(train_ds, validation_data=val_ds, epochs=30, callbacks=[...])
+### Step 2: Set up your environment
+```bash
+pip install tensorflow pandas numpy matplotlib seaborn scikit-learn opencv-python
 ```
 
----
+### Step 3: Prepare your dataset
 
-## 📊 Evaluation & Visualization
+Your dataset folder should be organized as follows:
 
-- Test accuracy and classification report computed after training
-- **t-SNE** is used to visualize feature separability from the penultimate layer
-- Custom batch visualization method is included to verify augmentations and label integrity
-
----
-
-## 📦 Dependencies
-
-To run our code, make sure to install the following packages:
-
-Main dependencies include:
-
-- `tensorflow`
-- `numpy`
-- `scikit-learn`
-- `matplotlib`
-- `seaborn`
-- `pandas`
-- `jupyter`
-- `Pillow`
-
----
-
-## 📈 Example Visualization
-
-```python
-# View a batch of CutMix-augmented images
-show_batch(train_ds, class_names=label_encoder.classes_)
-
-# Visualize learned feature space using t-SNE
-visualize_features(model, test_ds)
+```
+cleaned_african_plums_dataset/
+├── bruised/
+├── cracked/
+├── rotten/
+├── spotted/
+├── unaffected/
+└── unripe/
 ```
 
----
+You can upload the raw dataset from Kaggle (https://www.kaggle.com/datasets/arnaudfadja/african-plums-quality-and-defect-assessment-data) and run the **dataset overview notebook** to clean it and save it to cleaned_african_plums_dataset
 
-## 📁 Output Files
 
-- `EfficientNetb3-final.keras`: Saved trained model
-- `log.csv`: Training and validation metrics over epochs
+### Step 4: Run the notebooks
 
----
-## Recommendations
-- To improve model accuracy and generizability, more data is needed.
-- We can also try to remove the classes with few metric values like bruised and spotted and train them separately using 2 models (one with the classes bruised and spotted and the other with the 4 other classes), then choose the one with higher confidence score during prediction.
-- We can also apply cropping of image only to remove the background and help the model train more efficiently.
-- Use an ensemble of models trained with different augmentations or loss functions to increase robustness, especially for rare classes.
-- Since "spotted" and "bruised" are visually too similar, we can consider merging them
+Launch Jupyter Notebook or Colab:
 
-## III- Streamlit Plum Classifier (Streamlit_App_plums_detect_Ubunifu_AI.py)
+```bash
+jupyter notebook Plum_dataset_overview_Ubunifu_AI.ipynb
+jupyter notebook Plum_cutmix_effb3_6class_Ubunifu_AI.ipynb
+```
 
-This is a web-based AI platform that helps automatically predict the quality of plums using images or videos. It is built with **Streamlit** and uses a **deep learning model** (EfficientNetB3) trained to recognize six categories: **bruised, cracked, rotten, spotted, unaffected, and unripe**.
+> ✅ *Recommended: Use Google Colab for faster training (especially with GPU like A100).*
+Great question! Below is a clear and user-friendly section you can **add to your README** to explain how to run the **Streamlit app** for plum quality classification after training the model:
 
-When users upload a plum image or a video:
-- The app processes the image or each frame of the video.
-- The model predicts the condition of the plum.
-- The results, including prediction confidence scores, are displayed in easy-to-read charts and summaries.
-- The predictions are also saved automatically in CSV files for later review.
 
-The platform also provides two visualization tools:
-- **Model Metrics** (precision, recall, F1-score, etc.) showing the overall model performance.
-- **t-SNE Plot** showing how the model separates different plum conditions in feature space.
+## 🌐 How to Run the Streamlit App
 
-The app interface is simple:
-- You can upload an image or video.
-- Click a button to start detection.
-- See the predicted class and how confident the model is.
-- For videos, you also get a frame-by-frame breakdown.
+Once the model is trained and saved (e.g., `EfficientNetb3-final.keras`), you can deploy it using the **Streamlit app** to make predictions on new plum images or videos.
 
+### 🔧 1. Install Streamlit and required packages
+Make sure the following packages are installed:
+
+```bash
+pip install streamlit tensorflow opencv-python pillow numpy pandas plotly scikit-learn matplotlib
+```
+
+### 📁 2. Project Structure Example
+
+Ensure your project directory looks like this:
+
+```
+plum-classification-ai/
+├── files/
+│   └── EfficientNetb3-final.keras           # trained model
+├── app.py                                   # Streamlit app script
+├── image_prediction_result.csv              # (auto-generated)
+├── video_prediction_results.csv             # (auto-generated)
+├── t-SNE.png                                # optional for visualization
+├── metrics.png                              # optional for metrics
+
+```
+
+### ▶️ 3. Launch the app locally
+
+In your terminal or Anaconda prompt:
+
+```bash
+streamlit run app.py
+```
+
+This will open a browser window with the interactive plum classification interface.
+
+
+### 📦 4. Features of the App
+
+- 📷 Upload an image or video of plums
+- 🧠 The model will predict one of 6 classes:
+  `bruised`, `cracked`, `rotten`, `spotted`, `unaffected`, `unripe`
+- 📈 View class probabilities, confidence scores, and frame-by-frame predictions
+- 💾 CSV files with results are saved automatically
+- 📊 Optional t-SNE and metrics plots are displayed if the files are available
+  
 ## 🧑‍💻 Authors
 **Ubunifu AI**  
 - Djika Asmaou  Houma (Group leader)
@@ -239,7 +166,7 @@ The app interface is simple:
 
 
 
-
-
-
 **************************************************Thank you for reading**************************************************
+
+
+
