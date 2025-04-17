@@ -55,7 +55,7 @@ This notebook builds and trains a **Convolutional Neural Network** using **Effic
 - ⚖️ Handling of class imbalance using **cutmix augmentation**
 - 🧠 Model architecture based on **EfficientNetB3**
 - 📈 Metrics & performance visualizations (accuracy, F1-score, t-SNE, confusion matrix)
-- 💾 Saves the trained model and logs
+- 💾 Saves the trained model and logs 
 
 > 🚀 **Training Result**: The model achieves ~72% top-1 accuracy and ~99.5% top-k accuracy, showing strong performance in classifying "unaffected" and "unripe" categories.
 
