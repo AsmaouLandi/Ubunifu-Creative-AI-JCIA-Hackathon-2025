@@ -132,7 +132,7 @@ plum-classification-ai/
 In your terminal or Anaconda prompt:
 
 ```bash
-streamlit run app.py
+streamlit run Streamlit_App_plums_detect_Ubunifu_AI.py
 ```
 
 This will open a browser window with the interactive plum classification interface.
